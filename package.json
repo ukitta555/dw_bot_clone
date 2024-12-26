@@ -1,0 +1,15 @@
+{
+  "name": "crypto-price-tracking-bot",
+  "version": "1.0.0",
+  "description": "Telegram bot for tracking cryptocurrency prices and market data",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "node-fetch": "^2.7.0",
+    "node-telegram-bot-api": "^0.66.0",
+    "@supabase/supabase-js": "^2.39.1"
+  }
+}
