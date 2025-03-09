@@ -126,7 +126,7 @@ async function getDexInfo(poolAddress) {
 // Get tokens data
 async function getTokens() {
     try {
-        const response = await fetch('https://daos.pockethost.io/api/collections/Fund/records?filter=upcoming!=true');
+        const response = await fetch('https://api.dreampot.xyz/api/collections/Fund/records?page=1&perPage=500&skipTotal=1&filter=upcoming%20%3D%20false%20%26%26%20visible%20%3D%20true');
         if (!response.ok) {
             throw new Error(`API Error: ${response.status} ${response.statusText}`);
         }
@@ -216,8 +216,7 @@ bot.onText(/\/start/, async (msg) => {
     const message = '👑 *DAOs World Bot*\n\n' +
         '*Commands:*\n' +
         '/tokens - List active tokens\n' +
-        '/price alch - Detailed token information\n' +
-        '/history alch - Token price history analysis';
+        '/price alch - Detailed token information\n'
 
     if (currentUI === 'buttons') {
         const keyboard = {
@@ -238,7 +237,7 @@ bot.onText(/\/start/, async (msg) => {
 });
 
 // Tokens per page
-const TOKENS_PER_PAGE = 5;
+const TOKENS_PER_PAGE = 10;
 
 // /tokens command with pagination
 bot.onText(/\/tokens(?:\s+(\d+))?/, async (msg, match) => {
@@ -262,9 +261,10 @@ bot.onText(/\/tokens(?:\s+(\d+))?/, async (msg, match) => {
         pageTokens.forEach(token => {
             message += `*${token.name}* (${token.ticker})\n`;
             if (token.dex) {
-                message += `💰 $${token.dex.price || 'N/A'}\n`;
+                // message += `💰 $${token.dex.price || 'N/A'}\n`;
                 message += `💎 MC: $${formatNumber(token.dex.marketCap)}\n`;
-                message += `💧 Liq: $${formatNumber(token.dex.liquidity)}\n`;
+                message += `📊 24h Volume: $${formatNumber(token.dex.volume24h)}\n`;
+                // message += `💧 Liq: $${formatNumber(token.dex.liquidity)}\n`;
             }
             message += '\n';
         });
